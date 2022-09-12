@@ -13,10 +13,117 @@ const initialState = {
 };
 
 const calculatorReducer = (state = initialState, action) => {
-  let { type, payload } = action;
+  const { type, payload } = action;
   switch (type) {
     case LOAD_BUTTONS:
-      console.log(payload);
+      //checks
+      if (payload === "0") {
+        if (state.number.length === 0) return state;
+        // const expression = state.number.concat(action.payload);
+        // const lastOperator = expression.slice(-1);
+        // console.log(expression);
+        // console.log(lastOperator);
+        // console.log(state.number.slice(-1));
+        // if (state.number.slice(-1) == lastOperator) {
+        //   return state;
+        // }
+      }
+      if (payload === ".") {
+        if (state.number.length === 0) return state;
+      }
+      if (payload === "+") {
+        if (state.number.length === 0) return state;
+        const expression = state.number.concat(action.payload);
+        const lastOperator = expression.slice(-1);
+        if (state.number.slice(-1) == lastOperator) {
+          return state;
+        }
+        //check for diff operators to not occur together
+        const lastOperatorOccurence = state.number.slice(-1);
+        if (
+          lastOperatorOccurence == "*" ||
+          lastOperatorOccurence == "-" ||
+          lastOperatorOccurence == "/" ||
+          lastOperatorOccurence == "%"
+        ) {
+          return state;
+        }
+      }
+      if (payload === "-") {
+        //if (state.number.length === 0) return state;
+        const expression = state.number.concat(action.payload);
+        const lastOperator = expression.slice(-1);
+        if (state.number.slice(-1) == lastOperator) {
+          return state;
+        }
+        //check for diff operators to not occur together
+        const lastOperatorOccurence = state.number.slice(-1);
+        if (
+          lastOperatorOccurence == "*" ||
+          lastOperatorOccurence == "/" ||
+          lastOperatorOccurence == "+" ||
+          lastOperatorOccurence == "%"
+        ) {
+          return state;
+        }
+      }
+      if (payload === "/") {
+        if (state.number.length === 0) return state;
+        const expression = state.number.concat(action.payload);
+        const lastOperator = expression.slice(-1);
+        if (state.number.slice(-1) == lastOperator) {
+          return state;
+        }
+        //check for diff operators to not occur together
+        const lastOperatorOccurence = state.number.slice(-1);
+        if (
+          lastOperatorOccurence == "*" ||
+          lastOperatorOccurence == "-" ||
+          lastOperatorOccurence == "+" ||
+          lastOperatorOccurence == "%"
+        ) {
+          return state;
+        }
+      }
+      if (payload === "*") {
+        if (state.number.length === 0) return state;
+        const expression = state.number.concat(action.payload);
+        const lastOperator = expression.slice(-1);
+        if (state.number.slice(-1) == lastOperator) {
+          return state;
+        }
+        //check for diff operators to not occur together
+        const lastOperatorOccurence = state.number.slice(-1);
+        if (
+          lastOperatorOccurence == "/" ||
+          lastOperatorOccurence == "-" ||
+          lastOperatorOccurence == "+" ||
+          lastOperatorOccurence == "%"
+        ) {
+          return state;
+        }
+      }
+      if (payload === "%") {
+        if (state.number.length === 0) return state;
+        const expression = state.number.concat(action.payload);
+        const lastOperator = expression.slice(-1);
+        if (state.number.slice(-1) == lastOperator) {
+          return state;
+        }
+        //check for diff operators to not occur together
+        const lastOperatorOccurence = state.number.slice(-1);
+        if (
+          lastOperatorOccurence == "*" ||
+          lastOperatorOccurence == "-" ||
+          lastOperatorOccurence == "+" ||
+          lastOperatorOccurence == "/"
+        ) {
+          return state;
+        }
+      }
+
+      //End of Check
+
       return {
         ...state,
         ...payload,

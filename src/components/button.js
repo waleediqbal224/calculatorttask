@@ -18,21 +18,13 @@ const Buttons = ({ onPress, text, textStyle, buttonStyle }) => {
 
 export default Buttons;
 
-const screen = Dimensions.get("window");
-//const buttonWidth = screen.width / 4;
-
 const styles = StyleSheet.create({
   button: {
-    // backgroundColor: "red",
     height: 70,
     width: 80,
     alignItems: "center",
-    //alignSelf: "center",
-    //borderRadius: 10,
-    //borderWidth: 2,
     justifyContent: "center",
     margin: 4,
-    //padding: 10,
   },
   container: {
     flex: 1,

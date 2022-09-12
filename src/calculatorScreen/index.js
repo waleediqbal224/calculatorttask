@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, TextInput, Text } from "react-native";
 import Button from "../components/button";
 import Column from "../components/column";
@@ -14,22 +14,58 @@ import {
 const Calculator = () => {
   const dispatch = useDispatch();
   const myState = useSelector((state) => state.calculatorReducer);
-  // console.log(myState);
+  const lastChar = myState.number.slice(-1);
 
-  const [value, setValue] = useState("");
+  // useEffect(() => {
+  //   console.log(myState);
+  //   console.log(myState.number);
+  //   console.log(lastChar);
+  //   console.log("useEffect ends here");
+  // });
 
+  //const [value, setValue] = useState("");
+  const liveResultCheck = () => {
+    // if (
+    //   lastChar === "0" ||
+    //   lastChar === "1" ||
+    //   lastChar === "2" ||
+    //   lastChar === "3" ||
+    //   lastChar === "4" ||
+    //   lastChar === "5" ||
+    //   lastChar === "6" ||
+    //   lastChar === "7" ||
+    //   lastChar === "8" ||
+    //   lastChar === "9" ||
+    //   lastChar === "-" ||
+    //   lastChar === "+" ||
+    //   lastChar === "/" ||
+    //   lastChar === "*" ||
+    //   lastChar === "."
+    // ) {
+    dispatch(loadAns());
+    // }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.value}>
-        <TextInput
+        {/* <TextInput
           style={{ fontSize: 50, marginRight: 10, marginTop: 200 }}
-          //value={value.toString()}
           value={myState.number}
           selectionColor="#26cc00"
           showSoftInputOnFocus={false}
           //editable={false}
           color="white"
-        />
+        /> */}
+        <Text
+          style={{
+            fontSize: 50,
+            marginRight: 10,
+            marginTop: 200,
+            color: "white",
+          }}
+        >
+          {myState.number}
+        </Text>
         <Text style={styles.result}>{myState.ans}</Text>
       </View>
       <View style={styles.keypad}>
@@ -39,9 +75,27 @@ const Calculator = () => {
             text="C"
             onPress={() => dispatch(loadClear())}
           />
-          <Button text="7" onPress={() => dispatch(loadButtons(7))} />
-          <Button text="4" onPress={() => dispatch(loadButtons(4))} />
-          <Button text="1" onPress={() => dispatch(loadButtons(1))} />
+          <Button
+            text="7"
+            onPress={() => {
+              dispatch(loadButtons(7));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="4"
+            onPress={() => {
+              dispatch(loadButtons(4));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="1"
+            onPress={() => {
+              dispatch(loadButtons(1));
+              liveResultCheck();
+            }}
+          />
           <Button text="%" onPress={() => dispatch(loadButtons("%"))} />
         </Column>
         <Column>
@@ -50,10 +104,36 @@ const Calculator = () => {
             text="÷"
             onPress={() => dispatch(loadButtons("/"))}
           />
-          <Button text="8" onPress={() => dispatch(loadButtons("8"))} />
-          <Button text="5" onPress={() => dispatch(loadButtons("5"))} />
-          <Button text="2" onPress={() => dispatch(loadButtons("2"))} />
-          <Button text="0" onPress={() => dispatch(loadButtons("0"))} />
+          <Button
+            text="8"
+            onPress={() => {
+              dispatch(loadButtons("8"));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="5"
+            onPress={() => {
+              dispatch(loadButtons("5"));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="2"
+            onPress={() => {
+              dispatch(loadButtons("2"));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="0"
+            onPress={() => {
+              dispatch(loadButtons("0"));
+              if (myState.number.length != 0) {
+                liveResultCheck();
+              }
+            }}
+          />
         </Column>
         <Column>
           <Button
@@ -61,16 +141,53 @@ const Calculator = () => {
             text="×"
             onPress={() => dispatch(loadButtons("*"))}
           />
-          <Button text="9" onPress={() => dispatch(loadButtons("9"))} />
-          <Button text="6" onPress={() => dispatch(loadButtons("6"))} />
-          <Button text="3" onPress={() => dispatch(loadButtons("3"))} />
-          <Button text="." onPress={() => dispatch(loadButtons("."))} />
+          <Button
+            text="9"
+            onPress={() => {
+              dispatch(loadButtons("9"));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="6"
+            onPress={() => {
+              dispatch(loadButtons("6"));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="3"
+            onPress={() => {
+              dispatch(loadButtons("3"));
+              liveResultCheck();
+            }}
+          />
+          <Button
+            text="."
+            onPress={() => {
+              dispatch(loadButtons("."));
+            }}
+          />
         </Column>
         <Column>
           <Button
             textStyle={{ color: "#26cc00", fontSize: 25 }}
             text="⌫"
-            onPress={() => dispatch(loadBackspace())}
+            onPress={() => {
+              dispatch(loadBackspace());
+              const last = myState.number.slice(0, -1);
+              const last2 = last.slice(-1);
+              if (
+                last2 == "+" ||
+                last2 == "-" ||
+                last2 == "/" ||
+                last2 == "*" ||
+                last2 == ""
+              ) {
+              } else {
+                liveResultCheck();
+              }
+            }}
           />
           <Button
             textStyle={{ color: "#26cc00", fontSize: 40 }}
