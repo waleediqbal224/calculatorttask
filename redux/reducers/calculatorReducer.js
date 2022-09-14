@@ -19,14 +19,6 @@ const calculatorReducer = (state = initialState, action) => {
       //checks
       if (payload === "0") {
         if (state.number.length === 0) return state;
-        // const expression = state.number.concat(action.payload);
-        // const lastOperator = expression.slice(-1);
-        // console.log(expression);
-        // console.log(lastOperator);
-        // console.log(state.number.slice(-1));
-        // if (state.number.slice(-1) == lastOperator) {
-        //   return state;
-        // }
       }
       if (payload === ".") {
         if (state.number.length === 0) return state;
@@ -110,6 +102,7 @@ const calculatorReducer = (state = initialState, action) => {
         if (state.number.slice(-1) == lastOperator) {
           return state;
         }
+
         //check for diff operators to not occur together
         const lastOperatorOccurence = state.number.slice(-1);
         if (
@@ -130,6 +123,26 @@ const calculatorReducer = (state = initialState, action) => {
         number: state.number.concat(action.payload),
       };
     case LOAD_ANS:
+      const lastChar = state.number.slice(-1);
+      if (
+        lastChar === "*" ||
+        lastChar === "+" ||
+        lastChar === "-" ||
+        lastChar === "/" ||
+        lastChar === "%"
+      ) {
+        try {
+          return {
+            ...state,
+            number: state.number.slice(0, -1),
+          };
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      if (state.number === "") {
+        return state;
+      }
       try {
         return {
           ...state,

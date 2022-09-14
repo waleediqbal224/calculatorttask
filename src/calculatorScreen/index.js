@@ -22,28 +22,10 @@ const Calculator = () => {
   //   console.log(lastChar);
   //   console.log("useEffect ends here");
   // });
-
   //const [value, setValue] = useState("");
+
   const liveResultCheck = () => {
-    // if (
-    //   lastChar === "0" ||
-    //   lastChar === "1" ||
-    //   lastChar === "2" ||
-    //   lastChar === "3" ||
-    //   lastChar === "4" ||
-    //   lastChar === "5" ||
-    //   lastChar === "6" ||
-    //   lastChar === "7" ||
-    //   lastChar === "8" ||
-    //   lastChar === "9" ||
-    //   lastChar === "-" ||
-    //   lastChar === "+" ||
-    //   lastChar === "/" ||
-    //   lastChar === "*" ||
-    //   lastChar === "."
-    // ) {
     dispatch(loadAns());
-    // }
   };
   return (
     <View style={styles.container}>
@@ -214,7 +196,7 @@ const Calculator = () => {
             text="="
             onPress={() => {
               dispatch(loadAns());
-              console.log(myState.ans);
+              liveResultCheck();
             }}
           />
         </Column>
