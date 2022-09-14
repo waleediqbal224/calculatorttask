@@ -3,6 +3,7 @@ import {
   LOAD_BACKSPACE,
   LOAD_BUTTONS,
   LOAD_CLEAR,
+  LOAD_VALIDATION,
 } from "../actions/types";
 
 //export const CALCULATOR_KEY = "calculatorStore";
@@ -16,6 +17,62 @@ const calculatorReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case LOAD_BUTTONS:
+      return {
+        ...state,
+        ...payload,
+        number: state.number.concat(action.payload),
+      };
+    case LOAD_ANS:
+      const lastChar = state.number.slice(-1);
+      console.log(state);
+      if (state.number)
+        if (
+          lastChar === "*" ||
+          lastChar === "+" ||
+          lastChar === "-" ||
+          lastChar === "/" ||
+          lastChar === "%"
+        ) {
+          try {
+            return {
+              ...state,
+              number: state.number.slice(0, -1),
+            };
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      if (state.number === "") {
+        return state;
+      }
+      try {
+        return {
+          ...state,
+          ...payload,
+          ans: eval(state.number).toString(),
+        };
+      } catch (error) {
+        return {
+          ...state,
+          ...payload,
+          ans: "Error",
+        };
+      }
+    case LOAD_CLEAR:
+      return {
+        ...state,
+        ...payload,
+        number: "",
+        ans: "",
+      };
+    case LOAD_BACKSPACE:
+      return {
+        ...state,
+        ...payload,
+        number: state.number.slice(0, -1),
+        ans: "",
+      };
+    case LOAD_VALIDATION:
       //checks
       if (payload === "0") {
         if (state.number.length === 0) return state;
@@ -42,7 +99,6 @@ const calculatorReducer = (state = initialState, action) => {
         }
       }
       if (payload === "-") {
-        //if (state.number.length === 0) return state;
         const expression = state.number.concat(action.payload);
         const lastOperator = expression.slice(-1);
         if (state.number.slice(-1) == lastOperator) {
@@ -114,62 +170,14 @@ const calculatorReducer = (state = initialState, action) => {
           return state;
         }
       }
-
       //End of Check
-
+      console.log(action.payload);
       return {
         ...state,
         ...payload,
         number: state.number.concat(action.payload),
       };
-    case LOAD_ANS:
-      const lastChar = state.number.slice(-1);
-      if (
-        lastChar === "*" ||
-        lastChar === "+" ||
-        lastChar === "-" ||
-        lastChar === "/" ||
-        lastChar === "%"
-      ) {
-        try {
-          return {
-            ...state,
-            number: state.number.slice(0, -1),
-          };
-        } catch (e) {
-          console.log(e);
-        }
-      }
-      if (state.number === "") {
-        return state;
-      }
-      try {
-        return {
-          ...state,
-          ...payload,
-          ans: eval(state.number).toString(),
-        };
-      } catch (error) {
-        return {
-          ...state,
-          ...payload,
-          ans: "Error",
-        };
-      }
-    case LOAD_CLEAR:
-      return {
-        ...state,
-        ...payload,
-        number: "",
-        ans: "",
-      };
-    case LOAD_BACKSPACE:
-      return {
-        ...state,
-        ...payload,
-        number: state.number.slice(0, -1),
-        ans: "",
-      };
+
     default:
       return state;
   }

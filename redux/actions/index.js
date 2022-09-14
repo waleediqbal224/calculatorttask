@@ -1,4 +1,10 @@
-import { LOAD_ANS, LOAD_BACKSPACE, LOAD_BUTTONS, LOAD_CLEAR } from "./types";
+import {
+  LOAD_ANS,
+  LOAD_BACKSPACE,
+  LOAD_BUTTONS,
+  LOAD_CLEAR,
+  LOAD_VALIDATION,
+} from "./types";
 
 export const loadButtons = (number) => {
   return {
@@ -22,6 +28,12 @@ export const loadClear = (number) => {
 export const loadBackspace = (number) => {
   return {
     type: LOAD_BACKSPACE,
+    payload: number,
+  };
+};
+export const loadValidation = (number) => {
+  return {
+    type: LOAD_VALIDATION,
     payload: number,
   };
 };

@@ -9,12 +9,13 @@ import {
   loadAns,
   loadBackspace,
   loadClear,
+  loadValidation,
 } from "../../redux/actions/index";
 
 const Calculator = () => {
   const dispatch = useDispatch();
   const myState = useSelector((state) => state.calculatorReducer);
-  const lastChar = myState.number.slice(-1);
+  // const lastChar = myState.number.slice(-1);
 
   // useEffect(() => {
   //   console.log(myState);
@@ -78,13 +79,22 @@ const Calculator = () => {
               liveResultCheck();
             }}
           />
-          <Button text="%" onPress={() => dispatch(loadButtons("%"))} />
+          <Button
+            text="%"
+            onPress={() => {
+              //dispatch(loadButtons("%"));
+              dispatch(loadValidation("%"));
+            }}
+          />
         </Column>
         <Column>
           <Button
             textStyle={{ color: "#26cc00" }}
             text="÷"
-            onPress={() => dispatch(loadButtons("/"))}
+            onPress={() => {
+              dispatch(loadValidation("/"));
+              //dispatch(loadButtons("/"));
+            }}
           />
           <Button
             text="8"
@@ -110,7 +120,8 @@ const Calculator = () => {
           <Button
             text="0"
             onPress={() => {
-              dispatch(loadButtons("0"));
+              //dispatch(loadButtons("0"));
+              dispatch(loadValidation("0"));
               if (myState.number.length != 0) {
                 liveResultCheck();
               }
@@ -121,7 +132,10 @@ const Calculator = () => {
           <Button
             textStyle={{ color: "#26cc00" }}
             text="×"
-            onPress={() => dispatch(loadButtons("*"))}
+            onPress={() => {
+              dispatch(loadValidation("*"));
+              //dispatch(loadButtons("*"));
+            }}
           />
           <Button
             text="9"
@@ -147,7 +161,8 @@ const Calculator = () => {
           <Button
             text="."
             onPress={() => {
-              dispatch(loadButtons("."));
+              //dispatch(loadButtons("."));
+              dispatch(loadValidation("."));
             }}
           />
         </Column>
@@ -174,12 +189,18 @@ const Calculator = () => {
           <Button
             textStyle={{ color: "#26cc00", fontSize: 40 }}
             text="–"
-            onPress={() => dispatch(loadButtons("-"))}
+            onPress={() => {
+              dispatch(loadValidation("-"));
+              //dispatch(loadButtons("-"));
+            }}
           />
           <Button
             textStyle={{ color: "#26cc00", fontSize: 40 }}
             text="+"
-            onPress={() => dispatch(loadButtons("+"))}
+            onPress={() => {
+              dispatch(loadValidation("+"));
+              //dispatch(loadButtons("+"));
+            }}
           />
           <Button
             textStyle={{ fontSize: 50 }}
